@@ -1,0 +1,132 @@
+<database>
+  <databaseName>DSD100</databaseName>
+  <databaseFolderPath>D:/MY_PROJECT/music_source_sep/master_1/dataset/DSD100</databaseFolderPath>
+  <trackList>
+    <track>
+      <title>Heart Peripheral</title>
+      <artist>AM Contra</artist>
+      <performer>AM Contra</performer>
+      <databaseSplit>Training</databaseSplit>
+      <instrumentList>
+        <instrument>
+          <relativeFilepath>Sources/Dev/051 - AM Contra - Heart Peripheral/bass.wav</relativeFilepath>
+          <audioFormat>wav</audioFormat>
+          <sampleRate>44100</sampleRate>
+          <length>210.105760</length>
+          <numChannels>2</numChannels>
+          <instrumentChannel>3</instrumentChannel>
+          <instrumentName>Bass</instrumentName>
+          <hasEffects>true</hasEffects>
+          <multipleVoices>false</multipleVoices>
+        </instrument>
+        <instrument>
+          <relativeFilepath>Sources/Dev/051 - AM Contra - Heart Peripheral/drums.wav</relativeFilepath>
+          <audioFormat>wav</audioFormat>
+          <sampleRate>44100</sampleRate>
+          <length>210.105760</length>
+          <numChannels>2</numChannels>
+          <instrumentChannel>3</instrumentChannel>
+          <instrumentName>Drums</instrumentName>
+          <hasEffects>true</hasEffects>
+          <multipleVoices>false</multipleVoices>
+        </instrument>
+        <instrument>
+          <relativeFilepath>Sources/Dev/051 - AM Contra - Heart Peripheral/vocals.wav</relativeFilepath>
+          <audioFormat>wav</audioFormat>
+          <sampleRate>44100</sampleRate>
+          <length>210.105760</length>
+          <numChannels>2</numChannels>
+          <instrumentChannel>3</instrumentChannel>
+          <instrumentName>Voice</instrumentName>
+          <hasEffects>true</hasEffects>
+          <multipleVoices>true</multipleVoices>
+        </instrument>
+        <instrument>
+          <relativeFilepath>Sources/Dev/051 - AM Contra - Heart Peripheral/other.wav</relativeFilepath>
+          <audioFormat>wav</audioFormat>
+          <sampleRate>44100</sampleRate>
+          <length>210.105760</length>
+          <numChannels>2</numChannels>
+          <instrumentChannel>3</instrumentChannel>
+          <instrumentName>Other</instrumentName>
+          <hasEffects>true</hasEffects>
+          <multipleVoices>true</multipleVoices>
+        </instrument>
+        <instrument>
+          <relativeFilepath>Mixtures/Dev/051 - AM Contra - Heart Peripheral/mixture.wav</relativeFilepath>
+          <audioFormat>wav</audioFormat>
+          <sampleRate>44100</sampleRate>
+          <length>210.105760</length>
+          <numChannels>2</numChannels>
+          <instrumentChannel>3</instrumentChannel>
+          <instrumentName>Mix</instrumentName>
+          <hasEffects>true</hasEffects>
+          <multipleVoices>true</multipleVoices>
+        </instrument>
+      </instrumentList>
+    </track>
+    <track>
+      <title>Easy Tiger</title>
+      <artist>ANiMAL</artist>
+      <performer>ANiMAL</performer>
+      <databaseSplit>Training</databaseSplit>
+      <instrumentList>
+        <instrument>
+          <relativeFilepath>Sources/Dev/052 - ANiMAL - Easy Tiger/bass.wav</relativeFilepath>
+          <audioFormat>wav</audioFormat>
+          <sampleRate>44100</sampleRate>
+          <length>205.657891</length>
+          <numChannels>2</numChannels>
+          <instrumentChannel>3</instrumentChannel>
+          <instrumentName>Bass</instrumentName>
+          <hasEffects>true</hasEffects>
+          <multipleVoices>false</multipleVoices>
+        </instrument>
+        <instrument>
+          <relativeFilepath>Sources/Dev/052 - ANiMAL - Easy Tiger/drums.wav</relativeFilepath>
+          <audioFormat>wav</audioFormat>
+          <sampleRate>44100</sampleRate>
+          <length>205.657891</length>
+          <numChannels>2</numChannels>
+          <instrumentChannel>3</instrumentChannel>
+          <instrumentName>Drums</instrumentName>
+          <hasEffects>true</hasEffects>
+          <multipleVoices>false</multipleVoices>
+        </instrument>
+        <instrument>
+          <relativeFilepath>Sources/Dev/052 - ANiMAL - Easy Tiger/vocals.wav</relativeFilepath>
+          <audioFormat>wav</audioFormat>
+          <sampleRate>44100</sampleRate>
+          <length>205.657891</length>
+          <numChannels>2</numChannels>
+          <instrumentChannel>3</instrumentChannel>
+          <instrumentName>Voice</instrumentName>
+          <hasEffects>true</hasEffects>
+          <multipleVoices>true</multipleVoices>
+        </instrument>
+        <instrument>
+          <relativeFilepath>Sources/Dev/052 - ANiMAL - Easy Tiger/other.wav</relativeFilepath>
+          <audioFormat>wav</audioFormat>
+          <sampleRate>44100</sampleRate>
+          <length>205.657891</length>
+          <numChannels>2</numChannels>
+          <instrumentChannel>3</instrumentChannel>
+          <instrumentName>Other</instrumentName>
+          <hasEffects>true</hasEffects>
+          <multipleVoices>true</multipleVoices>
+        </instrument>
+        <instrument>
+          <relativeFilepath>Mixtures/Dev/052 - ANiMAL - Easy Tiger/mixture.wav</relativeFilepath>
+          <audioFormat>wav</audioFormat>
+          <sampleRate>44100</sampleRate>
+          <length>205.657891</length>
+          <numChannels>2</numChannels>
+          <instrumentChannel>3</instrumentChannel>
+          <instrumentName>Mix</instrumentName>
+          <hasEffects>true</hasEffects>
+          <multipleVoices>true</multipleVoices>
+        </instrument>
+      </instrumentList>
+    </track>
+  </trackList>
+</database>
