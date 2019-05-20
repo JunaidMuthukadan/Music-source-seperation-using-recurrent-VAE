@@ -3,7 +3,7 @@
 >* [__Take a look at the demo!__](https://www.youtube.com/)
 
 ## Intro
-Traditionally, discriminative training for source separation is proposed using deep neural networks or non-negative matrix factorization. In this project i proposed a variational autoencoder based framework using recurrent neural networks for blind musical source (bass,drums ,vocals and others) separation. It is principled generative moodel instead of traditional discriminative models
+Traditionally, discriminative training for source separation is proposed using deep neural networks or non-negative matrix factorization. In this project i proposed a variational autoencoder based framework using recurrent neural networks for blind musical source (bass,drums ,vocals and others) separation. It is principled generative model instead of traditional discriminative models
 
 
 ## Implementations
