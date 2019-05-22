@@ -8,11 +8,15 @@ Traditionally, discriminative training for musical source separation is proposed
   variational auto encoder structure[ Fig ]       <img src="img/vae.PNG">
 
 
+
 ## What is Recurrent VAE for Music Source Separation?
   The Recurrent VAE for Music Source Separation is a recurrent neural network variational autoencoder decder architecture that operates on magnitude spectrum of the mixed music and generates seperated musical sourses (bass,drums, vocals and etc).
 
   <img src="img/brief.PNG">
   flow of the model [ Fig ]
+  
+  
+ 
 
   The encoder structure is actually taken from goolge's Music-VAE architecture,It uses a two-layer bidirectional
   LSTM network (Hochreiter & Schmidhuber, 1997; Schuster & Paliwal, 1997). It process an input music sepectogram 
@@ -24,6 +28,8 @@ Traditionally, discriminative training for musical source separation is proposed
 
   <img src="img/structure.PNG">
   model architecture[ Fig ]
+  
+  
 
 * I used DSD100 [__Dataset__] (https://sigsep.github.io/datasets/dsd100.html) for training my model
 
