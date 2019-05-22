@@ -5,15 +5,15 @@
 ## Intro
 Traditionally, discriminative training for musical source separation is proposed using deep neural networks or non-negative matrix factorization. In this project i proposed a variational autoencoder (VAE) based framework using recurrent neural networks for blind musical source (bass,drums ,vocals and others) separation. It is principled generative model compared to other traditional discriminative models.
 
-  variational auto encoder structure[ Fig ]       <img src="img/vae.PNG">
+  Variational auto encoder structure[ Fig ]       <img src="img/vae.PNG">
 
 
 
 ## What is Recurrent VAE for Music Source Separation?
   The Recurrent VAE for Music Source Separation is a recurrent neural network variational autoencoder decder architecture that operates on magnitude spectrum of the mixed music and generates seperated musical sourses (bass,drums, vocals and etc).
 
-  <img src="img/brief.PNG">
-  flow of the model [ Fig ]
+   Flow of the model [ Fig ] <img src="img/brief.PNG">
+ 
   
   
  
@@ -26,8 +26,8 @@ Traditionally, discriminative training for musical source separation is proposed
   The decoder structure is, instead of Hierarchical decoder model as it is in google's Music-VAE I uses a simple uni-directinal two-layer LSTM network with tensorflows seq2seq, to test the performance.
 
 
-  <img src="img/structure.PNG">
-  model architecture[ Fig ]
+  Model architecture[ Fig ] <img src="img/structure.PNG">
+  
   
   
 
