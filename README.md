@@ -5,30 +5,27 @@
 ## Intro
 Traditionally, discriminative training for musical source separation is proposed using deep neural networks or non-negative matrix factorization. In this project i proposed a variational autoencoder (VAE) based framework using recurrent neural networks for blind musical source (bass,drums ,vocals and others) separation. It is principled generative model compared to other traditional discriminative models.
 
-<img src="img/vae.PNG">
-                        Variational auto encoder structure[ Fig ] 
+Variational auto encoder structure[ Fig ] <img src="img/vae.PNG">
+                         
 
 
 ## What is Recurrent VAE for Music Source Separation?
-  The Recurrent VAE for Music Source Separation is a recurrent neural network variational autoencoder decder architecture that operates on magnitude spectrum of the mixed music and generates seperated musical sourses (bass,drums, vocals and etc).
+The Recurrent VAE for Music Source Separation is a recurrent neural network variational autoencoder decder architecture that operates on magnitude spectrum of the mixed music and generates seperated musical sourses (bass,drums, vocals and etc).
 
-  <img src="img/brief.PNG">
+Flow of the model [ Fig ]  <img src="img/brief.PNG">
   
 
-                            Flow of the model [ Fig ] 
+The encoder structure is actually taken from goolge's Music-VAE architecture,It uses a two-layer bidirectional
+LSTM network (Hochreiter & Schmidhuber, 1997; Schuster & Paliwal, 1997). It process an input music sepectogram 
+x = {x1, x2, . . . , xL } to obtain the final state vectors from the second bidirectional LSTM layer. These
+are then concatenated and fed into two fullyconnected layers to produce the latent distribution parameters µ and σ.
 
-  The encoder structure is actually taken from goolge's Music-VAE architecture,It uses a two-layer bidirectional
-  LSTM network (Hochreiter & Schmidhuber, 1997; Schuster & Paliwal, 1997). It process an input music sepectogram 
-  x = {x1, x2, . . . , xL } to obtain the final state vectors from the second bidirectional LSTM layer. These
-  are then concatenated and fed into two fullyconnected layers to produce the latent distribution parameters µ and σ.
-
-  The decoder structure is a simple uni-directinal two-layer LSTM network with tensorflows seq2seq encoders.
+The decoder structure is a simple uni-directinal two-layer LSTM network with tensorflows seq2seq encoders.
 
 
-  <img src="img/structure.PNG">
+Model architecture[ Fig ]  <img src="img/structure.PNG">
   
-                            Model architecture[ Fig ] 
-
+                            
 * I used DSD100 [__Dataset__] (https://sigsep.github.io/datasets/dsd100.html) for training my model
 
 ## Requirements
