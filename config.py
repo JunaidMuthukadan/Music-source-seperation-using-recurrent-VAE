@@ -42,12 +42,12 @@ class ModelConfig:
     SR = 16000                # Sample Rate
     L_FRAME = 1024            # default 1024
     L_HOP = closest_power_of_two(L_FRAME / 4)
-    SEQ_LEN = 4
-    # For Melspectogram
     
     
 class TrainConfig:
     LR = 0.0001
+    GRAPH_PATH = 'graphs/'
+    CKPT_PATH = 'checkpoints/'
     FINAL_STEP = 100000
     CKPT_STEP = 500
     SECONDS = 3 # To get 512,512 in melspecto
@@ -78,11 +78,11 @@ def merge_hparams(hparams_1, hparams_2):
 def get_default_hparams():
   return tf.contrib.training.HParams(
       #max_seq_len=32,  # Maximum sequence length. Others will be truncated.
-      z_size=32,  # Size of latent vector z.
+      z_size=256,  # Size of latent vector z.
       free_bits=0.0,  # Bits to exclude from KL loss per dimension.
       max_beta=1.0,  # Maximum KL cost weight, or cost if not annealing.
       beta_rate=0.0,  # Exponential rate at which to anneal KL cost.
-      batch_size=512,  # Minibatch size.
+      batch_size=8,  # Minibatch size.
       grad_clip=1.0,  # Gradient clipping. Recommend leaving at 1.0.
       clip_mode='global_norm',  # value or global_norm.
       # If clip_mode=global_norm and global_norm is greater than this value,

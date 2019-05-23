@@ -2,15 +2,14 @@
 
 import os
 import shutil
-import GetData
-from utils import Diff
+import GetData 
 import tensorflow as tf
 from model import Model
 import _pickle as pickle
 from numpy import newaxis
-from config import ModelConfig,TrainConfig
 from preprocess import get_random_wav,spec_to_batch
 from preprocess import to_spectrogram, get_magnitude
+from config import ModelConfig,TrainConfig,Diff,CONFIG_MAP
 
 
 
@@ -20,7 +19,7 @@ import librosa.display
 # TODO multi-gpu
 def train():
 
-    dsd_train, dsd_test = GetData.getDSDFilelist("DSD100_test.xml")
+    dsd_train, dsd_test = GetData.getDSDFilelist("DSD100.xml")
 
     dataset = dict()
     dataset["train_sup"] = dsd_train # 50 training tracks from DSD100 as supervised dataset
@@ -36,8 +35,8 @@ def train():
     # Loss, Optimizer
     global_step = tf.Variable(0, dtype=tf.int32, trainable=False, name='global_step')
     loss_fn = model.loss()
-    lr = ((hparams.learning_rate - hparams.min_learning_rate) *
-        tf.pow(hparams.decay_rate, tf.to_float(self.global_step)) +hparams.min_learning_rate)
+    lr = ((CONFIG_MAP['flat-R-VAE'].hparams.learning_rate - CONFIG_MAP['flat-R-VAE'].hparams.min_learning_rate) *
+        tf.pow(CONFIG_MAP['flat-R-VAE'].hparams.decay_rate, tf.to_float(self.global_step)) +CONFIG_MAP['flat-R-VAE'].hparams.min_learning_rate)
     optimizer = tf.train.AdamOptimizer(learning_rate=lr).minimize(loss_fn, global_step=global_step)
 
     # Summaries
@@ -52,15 +51,15 @@ def train():
         writer = tf.summary.FileWriter(TrainConfig.GRAPH_PATH, sess.graph)
 
         # Input source
-    
-
+        
+        btch_size = CONFIG_MAP['flat-R-VAE'].hparams.batch_size
         loss = Diff()
         i=0;
         for step in range(global_step.eval(), TrainConfig.FINAL_STEP): # changed xrange to range for py3
             if(i>50)
                 i=0;
-            batch_ =dsd_train[i:i+8]
-            i =i+8
+            batch_ =dsd_train[i:i+btch_size]
+            i =i+btch_size
             mixes_wav,drums_wav = get_random_wav(batch_, TrainConfig.SECONDS, ModelConfig.SR)
 
 
@@ -97,8 +96,8 @@ def summaries(model, loss):
         tf.summary.histogram('grad/' + v.name, tf.gradients(loss, v))
     tf.summary.scalar('loss', loss)
     tf.summary.histogram('x_mixed', model.x_mixed)
-    tf.summary.histogram('y_src1', model.y_src1)
-    tf.summary.histogram('y_src2', model.y_src1)
+    tf.summary.histogram('x_drums', model.x_drums)
+    tf.summary.histogram('y_drums', model.y_drums)
     return tf.summary.merge_all()
 
 

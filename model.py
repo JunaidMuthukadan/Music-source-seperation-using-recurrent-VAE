@@ -65,7 +65,7 @@ class Model:
 
         sigma = tf.layers.dense(
         last_h,
-        z_size,
+        CONFIG_MAP['flat-R-VAE'].hparams.z_size,
         activation=tf.nn.softplus,
         name='encoder/sigma',
         kernel_initializer=tf.random_normal_initializer(stddev=0.001)) 
@@ -139,7 +139,7 @@ class Model:
 
     def loss(self):
         flat_rnn_output = self()
-        p_z = ds.MultivariateNormalDiag(loc=[0.] * hparams.z_size, scale_diag=[1.] * hparams.z_size)
+        p_z = ds.MultivariateNormalDiag(loc=[0.] * CONFIG_MAP['flat-R-VAE'].hparams.z_size, scale_diag=[1.] * CONFIG_MAP['flat-R-VAE'].hparams.z_size)
         kl_div = ds.kl_divergence(q_z, p_z)
         flat_x_target = flatten_maybe_padded_sequences(x_target, x_length)
         r_loss, metric_map = self._flat_reconstruction_loss(flat_x_target, flat_rnn_output)
@@ -150,9 +150,9 @@ class Model:
             r_losses.append(tf.reduce_sum(r_loss[b:e]))
         r_loss = tf.stack(r_losses)
         
-        free_nats = hparams.free_bits * tf.math.log(2.0)
+        free_nats = CONFIG_MAP['flat-R-VAE'].hparams.free_bits * tf.math.log(2.0)
         kl_cost = tf.maximum(kl_div - free_nats, 0)
-        beta = ((1.0 - tf.pow(hparams.beta_rate, tf.to_float(self.global_step)))* hparams.max_beta)
+        beta = ((1.0 - tf.pow(CONFIG_MAP['flat-R-VAE'].hparams.beta_rate, tf.to_float(self.global_step)))* CONFIG_MAP['flat-R-VAE'].hparams.max_beta)
         return tf.reduce_mean(r_loss) + beta * tf.reduce_mean(kl_cost)
 
 
