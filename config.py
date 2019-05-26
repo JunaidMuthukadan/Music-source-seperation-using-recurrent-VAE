@@ -6,15 +6,13 @@ Created on Sun Apr 21 13:57:59 2019
 """
 import tensorflow as tf
 import collections
-from base_model import MusicVAE
-import lstm_models
 from tensorflow.contrib.training import HParams
 
 
 
 class Config(collections.namedtuple(
     'Config',
-    ['model', 'hparams', 'note_sequence_augmenter', 'data_converter',
+    ['hparams',
      'train_examples_path', 'eval_examples_path'])):
 
   def values(self):
@@ -42,6 +40,7 @@ class ModelConfig:
     SR = 16000                # Sample Rate
     L_FRAME = 1024            # default 1024
     L_HOP = closest_power_of_two(L_FRAME / 4)
+    SEQ_LEN = 252
     
     
 class TrainConfig:
@@ -50,7 +49,7 @@ class TrainConfig:
     CKPT_PATH = 'checkpoints/'
     FINAL_STEP = 100000
     CKPT_STEP = 500
-    SECONDS = 3 # To get 512,512 in melspecto
+    SECONDS = 4 # To get 512,512 in melspecto
     RE_TRAIN = True
     session_conf = tf.ConfigProto(
         device_count={'CPU': 1, 'GPU': 1},
@@ -102,9 +101,6 @@ def get_default_hparams():
 CONFIG_MAP = {}
 
 CONFIG_MAP['flat-R-VAE'] = Config(
-    model=MusicVAE(
-        lstm_models.BidirectionalLstmEncoder(),
-        lstm_models.CategoricalLstmDecoder()),
     hparams=merge_hparams(
         get_default_hparams(),
         HParams(
@@ -114,7 +110,6 @@ CONFIG_MAP['flat-R-VAE'] = Config(
             #free_bits=256,
             max_beta=0.2,
         )),
-    note_sequence_augmenter=None,
     #data_converter=mel_16bar_converter,
     train_examples_path=None,
     eval_examples_path=None,

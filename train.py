@@ -5,11 +5,12 @@ import shutil
 import GetData 
 import tensorflow as tf
 from model import Model
-import _pickle as pickle
+import pickle
 from numpy import newaxis
+from utils import Diff
 from preprocess import get_random_wav,spec_to_batch
 from preprocess import to_spectrogram, get_magnitude
-from config import ModelConfig,TrainConfig,Diff,CONFIG_MAP
+from config import ModelConfig,TrainConfig,CONFIG_MAP
 
 
 
@@ -56,11 +57,11 @@ def train():
         loss = Diff()
         i=0;
         for step in range(global_step.eval(), TrainConfig.FINAL_STEP): # changed xrange to range for py3
-            if(i>50)
-                i=0;
+            if(i>50):
+                i=0
             batch_ =dsd_train[i:i+btch_size]
             i =i+btch_size
-            mixes_wav,drums_wav = get_random_wav(batch_, TrainConfig.SECONDS, ModelConfig.SR)
+            mixed_wav,drums_wav = get_random_wav(batch_, TrainConfig.SECONDS, ModelConfig.SR)
 
 
             mixed_spec = to_spectrogram(mixed_wav)
