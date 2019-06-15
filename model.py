@@ -9,6 +9,7 @@ import tensorflow_probability as tfp
 from config import ModelConfig,CONFIG_MAP
 from tensorflow.contrib.rnn import GRUCell, MultiRNNCell
 from tensorflow.python.layers import core as layers_core
+from utils import flatten_maybe_padded_sequences
 
 
 seq2seq = tf.contrib.seq2seq
@@ -25,6 +26,11 @@ class Model:
         self.x_drums = tf.placeholder(tf.float32, shape=(None, None, ModelConfig.L_FRAME // 2 + 1), name='x_drums')
         self.y_drums = tf.placeholder(tf.float32, shape=(None, None, ModelConfig.L_FRAME // 2 + 1), name='y_drums')
         #self.y_other = tf.placeholder(tf.float32, shape=(None, None, ModelConfig.L_FRAME // 2 + 1), name='y_src4')
+
+        self.x_length = tf.placeholder(tf.int64, name = 'x_length')
+        self.input_shape_ =tf.placeholder(tf.int64, name = 'input_shape_')
+        self.x_length_b = tf.placeholder(tf.int64, shape=(None),name = 'x_length_b')
+        self.global_step = tf.train.get_or_create_global_step()
 
 
 
@@ -94,17 +100,18 @@ class Model:
         CONFIG_MAP['flat-R-VAE'].hparams.residual_decoder, True)
 
         x_input = tf.concat([self.x_drums, repeated_z], axis=2)
-        x_length = shape(self.x_mixed)[2]
-        x_length_b = np.array(CONFIG_MAP['flat-R-VAE'].hparams.batch_size*[x_length])
-        helper = seq2seq.TrainingHelper(x_input, x_length_b)
-        output_layer = layers_core.Dense(x_length, name='output_projection')
+        self.x_length = shape(self.x_mixed)[2]
+        self.x_length_b = np.array(CONFIG_MAP['flat-R-VAE'].hparams.batch_size*[self.x_length])
+        self.x_length_b = self.x_length_b.astype(np.int32)
+        helper = seq2seq.TrainingHelper(x_input, self.x_length_b)
+        output_layer = layers_core.Dense(self.x_length, name='output_projection')
         initial_state = lstm_utils.initial_cell_state_from_embedding(dec_cell, z, name='decoder/z_to_initial_state')
-
-        decoder = lstm_utils.Seq2SeqLstmDecoder(dec_cell,helper,initial_state=initial_state,input_shape=helper.inputs.shape[2:],output_layer=output_layer)
-        max_length =None # (Optional) The maximum iterations to decode.
-        final_output, final_state, final_lengths = seq2seq.dynamic_decode(decoder,maximum_iterations=max_length,swap_memory=True,scope='decoder')
+        self.input_shape_ =helper.inputs.shape[2:][0].value
+        decoder = lstm_utils.Seq2SeqLstmDecoder(dec_cell,helper,initial_state=initial_state,input_shape=self.input_shape_,output_layer=output_layer)
+        #max_length =None  (Optional) The maximum iterations to decode.
+        final_output, final_state, final_lengths = seq2seq.dynamic_decode(decoder,swap_memory=True,scope='decoder')
         #flat_x_target = flatten_maybe_padded_sequences(x_target, x_length)
-        flat_rnn_output = flatten_maybe_padded_sequences(final_output.rnn_output, x_length_b)
+        flat_rnn_output = flatten_maybe_padded_sequences(final_output.rnn_output, self.x_length_b)
         
         
         
@@ -119,7 +126,7 @@ class Model:
         y_tilde_src2 = y_hat_src2 / (y_hat_src1 + y_hat_src2 + np.finfo(float).eps) * self.x_mixed
 
         return y_tilde_src1, y_tilde_src2'''
-        return flat_rnn_output
+        return flat_rnn_output, q_z
 
 
 
@@ -143,12 +150,12 @@ class Model:
 
 
     def loss(self):
-        flat_rnn_output = self()
+        flat_rnn_output ,q_z = self()
         p_z = ds.MultivariateNormalDiag(loc=[0.] * CONFIG_MAP['flat-R-VAE'].hparams.z_size, scale_diag=[1.] * CONFIG_MAP['flat-R-VAE'].hparams.z_size)
         kl_div = ds.kl_divergence(q_z, p_z)
-        flat_x_target = flatten_maybe_padded_sequences(y_drums, x_length_b)
-        r_loss, metric_map = self._flat_reconstruction_loss(flat_x_target, flat_rnn_output)
-        cum_x_len = tf.concat([(0,), tf.cumsum(x_length_b)], axis=0)
+        flat_x_target = flatten_maybe_padded_sequences(self.y_drums, self.x_length_b)
+        r_loss,_ = self._flat_reconstruction_loss(flat_x_target, flat_rnn_output)
+        cum_x_len = tf.concat([(0,), tf.cumsum(self.x_length_b)], axis=0)
         r_losses = []
         for i in range(CONFIG_MAP['flat-R-VAE'].hparams.batch_size):
             b, e = cum_x_len[i], cum_x_len[i + 1]
@@ -164,7 +171,7 @@ class Model:
         
     @staticmethod
     def spec_to_batch(src):
-        num_wavs, freq, n_frames = src.shape
+        _, freq, n_frames = src.shape
 
         # Padding
         pad_len = 0

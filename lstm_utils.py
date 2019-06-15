@@ -16,6 +16,7 @@ from tensorflow.contrib import rnn
 from tensorflow.contrib import seq2seq
 from tensorflow.contrib.cudnn_rnn.python.layers import cudnn_rnn
 from tensorflow.python.util import nest
+from config import CONFIG_MAP
 
 
 def rnn_cell(rnn_cell_size, dropout_keep_prob, residual, is_training=True):
@@ -40,7 +41,7 @@ def initial_cell_state_from_embedding(cell, z, name=None):
   """Computes an initial RNN `cell` state from an embedding, `z`."""
   flat_state_sizes = nest.flatten(cell.state_size)
   return nest.pack_sequence_as(
-      cell.zero_state(batch_size=z.shape[0], dtype=tf.float32),
+      cell.zero_state(CONFIG_MAP['flat-R-VAE'].hparams.batch_size, dtype=tf.float32),
       tf.split(
           tf.layers.dense(
               z,

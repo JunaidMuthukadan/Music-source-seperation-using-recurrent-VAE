@@ -34,11 +34,11 @@ def train():
     model = Model()
 
     # Loss, Optimizer
-    global_step = tf.Variable(0, dtype=tf.int32, trainable=False, name='global_step')
+    #global_step = tf.Variable(0, dtype=tf.int32, trainable=False, name='global_step')
     loss_fn = model.loss()
     lr = ((CONFIG_MAP['flat-R-VAE'].hparams.learning_rate - CONFIG_MAP['flat-R-VAE'].hparams.min_learning_rate) *
-        tf.pow(CONFIG_MAP['flat-R-VAE'].hparams.decay_rate, tf.to_float(self.global_step)) +CONFIG_MAP['flat-R-VAE'].hparams.min_learning_rate)
-    optimizer = tf.train.AdamOptimizer(learning_rate=lr).minimize(loss_fn, global_step=global_step)
+        tf.pow(CONFIG_MAP['flat-R-VAE'].hparams.decay_rate, tf.to_float(global_step)) +CONFIG_MAP['flat-R-VAE'].hparams.min_learning_rate)
+    optimizer = tf.train.AdamOptimizer(learning_rate=lr).minimize(loss_fn, global_step=model.global_step)
 
     # Summaries
     summary_op = summaries(model, loss_fn)
@@ -55,8 +55,8 @@ def train():
         
         btch_size = CONFIG_MAP['flat-R-VAE'].hparams.batch_size
         loss = Diff()
-        i=0;
-        for step in range(global_step.eval(), TrainConfig.FINAL_STEP): # changed xrange to range for py3
+        i=0
+        for step in range(model.global_step.eval(), TrainConfig.FINAL_STEP): # changed xrange to range for py3
             if(i>50):
                 i=0
             batch_ =dsd_train[i:i+btch_size]
