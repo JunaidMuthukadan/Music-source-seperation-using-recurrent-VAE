@@ -1,0 +1,15 @@
+The Demixing Secret Dataset (DSD) consists of songs of different styles along with the images of their constitutive bojects.
+
+DSD contains two folders, a folder with the mixture set, "Mixtures," and a folder with the source set, "Sources." Each folder contains two subfolders, a folder with a development set, "Dev," and folder with a test set, "Test"; supervised approaches should be trained on the former set and tested on both sets. 
+
+In DSD100, the first iteration of the DSD dataset, each subfolder contains 50 sub subfolders corresponding to 50 songs, for a total of 100 different songs. Each sub subfolder from "Mixtures" contains one file, "mixture.wav," corresponding to the mixture, and each sub subfolder from "Sources" contains 4 files, "bass.wav," "drums.wav," other.wav" (i.e., the other instruments), and "vocals.wav," corresponding to the sources. For a same song, the mixture and the sources are stereophonic, have the same length and the same sampling frequency (i.e., 44,100 Hz).
+
+The sources for DSD100 were created from stems downloaded from The 'Mixing Secrets' Free Multitrack Download Library at www.cambridge-mt.com/ms-mtk.htm. Please refer to this original resource for any question regarding your rights on your use of the DSD100 data. We would like to thank Mike Senior, not only for giving us the permission to use this multitrack material, but also for maintaining such resources for the audio community. 
+
+
+Authors: 
+Zafar Rafii, (zafarrafii@gmail.com)
+Antoine Liutkus, (antoine.liutkus@inria.fr)
+Stylianos - Ioannis Mimilakis, (stylianos.ioannis.mimilakis@idmt.fraunhofer.de)
+
+Last Update: June 8th, 2016
